@@ -9,7 +9,7 @@ function initialisePage() {
     setCurrentDay();
 
     const timetableEl = $("#timetable");
-    for (let hour = 6; hour <= 18; hour++) {
+    for (let hour = 8; hour <= 18; hour++) {
         timetableEl.append(createRow(hour, "", 12));
     }
 }
@@ -18,13 +18,18 @@ function createRow(rowHour, savedText, currentHour) {
     var newRow = $("<div>").addClass("row");
     var hourCol = $("<div>").addClass("col hour").text(formatHourNumber(rowHour));
     var textCol = $("<textarea>").addClass("col time-block").text(savedText);
-    var buttonCol = $("<button>").addClass("col saveBtn").text("Save"); 
+    var buttonCol = $("<button>").addClass("col saveBtn").text("save"); 
     newRow.append(hourCol, textCol, buttonCol);
 
     textCol.on("input", function () {
-      localStorage.setItem("savedText", textCol.val());
+        localStorage.setItem("savedText", textCol.val());
     });
-  
+
+
+    buttonCol.on("click", function () {
+        localStorage.setItem("savedText", textCol.val());
+    });
+
 
     if (rowHour < currentHour) {
         newRow.addClass("past");
