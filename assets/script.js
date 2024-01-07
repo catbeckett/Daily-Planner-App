@@ -1,29 +1,41 @@
-function setCurrentDay() { 
-    const currentDayStr = dayjs().format("dddd MMMM DD")
-const currentDayEl = $("#currentDay")
+function setCurrentDay() {
+    const currentDayStr = dayjs().format("dddd MMMM DD");
+    const currentDayEl = $("#currentDay");
 
-currentDayEl.text(currentDayStr)
+    currentDayEl.text(currentDayStr);
 }
 
 function initialisePage() {
-    setCurrentDay()
-    
-    const timetableEl=$("#timetable")
-    timetableEl.append(createRow(10,"",12))
+    setCurrentDay();
+
+    const timetableEl = $("#timetable");
+    for (let hour = 6; hour <= 18; hour++) {
+        timetableEl.append(createRow(hour, "", 12));
+    }
 }
 
-function createRow (rowHour, savedText, currentHour) {
-var newRow = $("<div>").addClass("row") 
+function createRow(rowHour, savedText, currentHour) {
+    var newRow = $("<div>").addClass("row");
+    var hourCol = $("<div>").addClass("col hour").text(formatHourNumber(rowHour));
+    var textCol = $("<textarea>").addClass("col time-block").text(savedText);
+    var buttonCol = $("<button>").addClass("col saveBtn").text("Save"); 
+    newRow.append(hourCol, textCol, buttonCol);
 
-var hourCol = $("<div>").addClass("col hour").text(formatHourNumber(rowHour))
+    textCol.on("input", function () {
+      localStorage.setItem("savedText", textCol.val());
+    });
+  
 
+    if (rowHour < currentHour) {
+        newRow.addClass("past");
+    } else if (rowHour === currentHour) {
+        newRow.addClass("present");
+    } else {
+        newRow.addClass("future");
+    }
 
-var textCol = $("<textarea>").addClass("col time-block").text(savedText)
-var buttonCol = $("<button>").addClass("col saveBtn")
-newRow.append(hourCol,textCol,buttonCol)
-return newRow
-
-}
+    return newRow;
+  }
 
 function formatHourNumber (hourNumber) {
     var hourString=""
@@ -50,4 +62,4 @@ return hourString
 
 }
 
-initialisePage()
+initialisePage();
