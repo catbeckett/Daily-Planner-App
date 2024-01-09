@@ -8,6 +8,13 @@ function setCurrentDay() {
 function initialisePage() {
     setCurrentDay();
 
+    const getCurrentHour = () => {
+        const currentHour = dayjs().format("H");
+        return parseInt(currentHour, 10);
+    };
+
+    const currentHour = getCurrentHour();
+
     const timetableEl = $("#timetable");
     for (let hour = 8; hour <= 18; hour++) {
         timetableEl.append(createRow(hour, "", 12));
@@ -25,12 +32,10 @@ function createRow(rowHour, savedText, currentHour) {
         localStorage.setItem("savedText", textCol.val());
     });
 
-
     buttonCol.on("click", function () {
         localStorage.setItem("savedText", textCol.val());
     });
-
-
+  
     if (rowHour < currentHour) {
         newRow.addClass("past");
     } else if (rowHour === currentHour) {
