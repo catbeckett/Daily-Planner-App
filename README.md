@@ -2,7 +2,7 @@
 
 ## Overview
 
-This challenge involved creating a simple calendar application that allows a user to save events for each hour of the day by modifying starter code. This app runs in the browser and features dynamically updated HTML and CSS powered by jQuery.
+This challenge involved creating a simple calendar application that allows a user to save events for each hour of the day by modifying starter code. This app runs in the browser and features dynamically updated HTML and CSS powered by jQuery. Please see a link to the deployed page here: https://catbeckett.github.io/Daily-Planner-App/ 
 
 ## This app meets the grading criteria as it:
 
