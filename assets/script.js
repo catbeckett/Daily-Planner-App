@@ -17,7 +17,11 @@ function initialisePage() {
 
     const timetableEl = $("#timetable");
     for (let hour = 8; hour <= 18; hour++) {
-        timetableEl.append(createRow(hour, "", currentHour));
+        // Retrieve saved text from local storage
+        const savedText = localStorage.getItem(`savedText_${hour}`) || ""; // Use empty string if no data found
+
+        // Pass saved text to createRow function
+        timetableEl.append(createRow(hour, savedText, currentHour));
     }
 }
 
