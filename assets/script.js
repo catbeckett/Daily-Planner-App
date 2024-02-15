@@ -17,7 +17,7 @@ function initialisePage() {
 
     const timetableEl = $("#timetable");
     for (let hour = 8; hour <= 18; hour++) {
-        timetableEl.append(createRow(hour, "", 12));
+        timetableEl.append(createRow(hour, "", currentHour));
     }
 }
 
@@ -29,11 +29,11 @@ function createRow(rowHour, savedText, currentHour) {
     newRow.append(hourCol, textCol, buttonCol);
 
     textCol.on("input", function () {
-        localStorage.setItem("savedText", textCol.val());
+        localStorage.setItem(`savedText_${rowHour}`, textCol.val());
     });
 
     buttonCol.on("click", function () {
-        localStorage.setItem("savedText", textCol.val());
+        localStorage.setItem(`savedText_${rowHour}`, textCol.val());
     });
   
     if (rowHour < currentHour) {
@@ -45,31 +45,23 @@ function createRow(rowHour, savedText, currentHour) {
     }
 
     return newRow;
-  }
-
-function formatHourNumber (hourNumber) {
-    var hourString=""
-if (hourNumber>12) {
-    hourNumber=hourNumber-12
-    hourString=hourNumber.toString()
-    hourString=hourString+"PM"
 }
 
-else if (hourNumber==12) {
-    hourString= "12PM"
-}
-
-else if (hourNumber==0) {
-    hourString= "12AM"
-}
-
-else {
-    hourString=hourNumber.toString()
-    hourString=hourString+ "AM"
-
-}
-return hourString
-
+function formatHourNumber(hourNumber) {
+    var hourString = "";
+    if (hourNumber > 12) {
+        hourNumber = hourNumber - 12;
+        hourString = hourNumber.toString();
+        hourString = hourString + "PM";
+    } else if (hourNumber == 12) {
+        hourString = "12PM";
+    } else if (hourNumber == 0) {
+        hourString = "12AM";
+    } else {
+        hourString = hourNumber.toString();
+        hourString = hourString + "AM";
+    }
+    return hourString;
 }
 
 initialisePage();
