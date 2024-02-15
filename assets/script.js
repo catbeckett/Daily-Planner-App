@@ -5,13 +5,13 @@ function setCurrentDay() {
     currentDayEl.text(currentDayStr);
 }
 
+function getCurrentHour() {
+    const currentHour = dayjs().format("H");
+    return parseInt(currentHour, 10);
+}
+
 function initialisePage() {
     setCurrentDay();
-
-    const getCurrentHour = () => {
-        const currentHour = dayjs().format("H");
-        return parseInt(currentHour, 10);
-    };
 
     const currentHour = getCurrentHour();
 
@@ -35,16 +35,20 @@ function createRow(rowHour, savedText, currentHour) {
     buttonCol.on("click", function () {
         localStorage.setItem(`savedText_${rowHour}`, textCol.val());
     });
-  
-    if (rowHour < currentHour) {
-        newRow.addClass("past");
-    } else if (rowHour === currentHour) {
-        newRow.addClass("present");
-    } else {
-        newRow.addClass("future");
-    }
+
+    updateTimeBlockClass(newRow, rowHour, currentHour);
 
     return newRow;
+}
+
+function updateTimeBlockClass(rowElement, rowHour, currentHour) {
+    if (rowHour < currentHour) {
+        rowElement.addClass("past");
+    } else if (rowHour === currentHour) {
+        rowElement.addClass("present");
+    } else {
+        rowElement.addClass("future");
+    }
 }
 
 function formatHourNumber(hourNumber) {
